@@ -1,8 +1,91 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    var name = "Adrian";
+    var surname = "Bottini";
+
+    void printNumbersSum(int nMax)
+    {
+        var result = 0;
+        for (int i = 1; i <= nMax; i++)
+        {
+            result += i;
+        }
+        <span>@result</span>
+    }
+
+    int letterCount()
+    {
+        string phrase = "nel mezzo del cammin di nostra vita";
+        var letters = phrase.ToCharArray();
+        var count = 0;
+        foreach (var letter in letters)
+        {
+            if (letter == 'a')
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    List<int> randomNumbers()
+    {
+        var random = new Random();
+        var numbers = new List<int>();
+        for (var i = 0; i < 20; i++)
+        {
+            numbers.Add(random.Next(1, 91));
+        }
+        return numbers;
+    }
+
+    void printNumbersBetween(int nMin, int nMax, List<int> list)
+    {
+        <ul>
+            @foreach (var n in list)
+            {
+                if (n > 20 & n < 80)
+                {
+                    <li class="list-unstyled">@n</li>
+                }
+            }
+        </ul>
+    }
+    string dayOfTheWeekIt(DateTime data)
+    {
+        switch (data.DayOfWeek.ToString())
+        {
+            case "Monday":
+                return "Lunedì";
+            case "Tuesday":
+                return "Martedì";
+            case "Wednesday":
+                return "Mercoledì";
+            case "Thursday":
+                return "Giovedì";
+            case "Friday":
+                return "Venerdì";
+            case "Saturday":
+                return "Sabato";
+            case "Sunday":
+                return "Domenica";
+        }
+        return "";
+    }
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center container">
+    <h2> Ciao @name @surname</h2>
+    <p>Somma dei numeri da 1 a 15: @{
+            printNumbersSum(15);
+        }</p>
+    <p>Nella frase, la lettera "a" è presente @letterCount() volte</p>
+    <p>I numeri compresi tra 20 e 80 presenti nella lista sono: </p>
+    @{
+        printNumbersBetween(20, 70, randomNumbers());
+    }
+    <p>Data e ora attuali: @DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")</p>
+    <p>Data e ora di sette giorni fa: @DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd HH:mm:ss")</p>
+    <p>Oggi è @dayOfTheWeekIt(DateTime.Today)</p>
+    <p>Oggi ma fra un anno sarà @dayOfTheWeekIt(DateTime.Today.AddYears(1))</p>
 </div>
